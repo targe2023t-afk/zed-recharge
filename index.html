@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ZED El Sheikh Zayed – GTPay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0b0c;--bg2:#17150f;--ink:#f4ecd8;--mute:#b9ad8c;--gold:#d4af5a;--gold2:#f0d896;--line:rgba(212,175,90,.35);
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b0b0c;--bg2:#17150f;--ink:#f4ecd8}}
+:root[data-theme="dark"]{--bg:#0b0b0c;--bg2:#17150f;--ink:#f4ecd8}
+*{box-sizing:border-box;margin:0}
+html,body{min-height:100%}
+body{font-family:'Cairo',system-ui,sans-serif;color:var(--ink);background:radial-gradient(120% 80% at 50% 0%,var(--bg2),var(--bg) 70%);display:flex;justify-content:center}
+main{width:100%;max-width:460px;padding:44px 26px 40px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.logo{width:112px;height:auto;filter:drop-shadow(0 6px 24px rgba(212,175,90,.25))}
+.orn{display:flex;align-items:center;gap:12px;width:100%;margin:30px 0 26px;color:var(--gold)}
+.orn::before,.orn::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--line))}
+.orn::after{transform:scaleX(-1)}
+.orn i{width:7px;height:7px;transform:rotate(45deg);background:var(--gold)}
+.en{font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;line-height:1.35;color:var(--gold2);direction:ltr;letter-spacing:.2px}
+.ar{font-size:19px;font-weight:600;line-height:1.7;margin-top:12px}
+.sub{margin-top:0;margin-bottom:6px;color:var(--gold2);font-size:19px;font-weight:600;line-height:1.7}
+.btns{display:grid;gap:14px;width:100%;margin-top:16px}
+button.lang{all:unset;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-radius:16px;border:1px solid var(--line);background:linear-gradient(135deg,rgba(212,175,90,.16),rgba(212,175,90,.04));color:var(--ink);font:700 19px 'Cairo',sans-serif;transition:.2s;-webkit-tap-highlight-color:transparent}
+button.lang:hover,button.lang:active{border-color:var(--gold);background:linear-gradient(135deg,rgba(212,175,90,.3),rgba(212,175,90,.08));transform:translateY(-1px)}
+button.lang small{font:500 13px 'Cairo',sans-serif;color:var(--mute)}
+button.lang b{color:var(--gold);font-size:24px;font-weight:400}
+.foot{margin-top:44px;font-size:12px;color:var(--mute);letter-spacing:2px;direction:ltr}
+#v{position:fixed;inset:0;background:#0b0b0c;display:none;flex-direction:column;z-index:9}
+#v.on{display:flex}
+#bar{display:flex;justify-content:space-between;align-items:center;padding:calc(10px + env(safe-area-inset-top,0px)) 16px 10px;border-bottom:1px solid var(--line)}
+#bar button{all:unset;cursor:pointer;color:var(--gold2);font:700 16px 'Cairo',sans-serif;padding:6px 4px}
+#bar span{color:var(--mute);font-size:14px}
+#pg{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;padding:12px 10px calc(20px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:12px;align-items:center}
+#pg img{width:100%;max-width:760px;height:auto;border-radius:6px;background:#fff}
+</style>
+</head>
+<body>
+<main>
+  <img class="logo" alt="ZED El Sheikh Zayed" src="assets/logo_gold.png">
+  <div class="orn"><i></i></div>
+  <p class="sub">اختر اللغة لعرض الملف &nbsp;·&nbsp; Choose your language</p>
+  <div class="btns">
+    <button class="lang" data-l="ar"><span>العربية<br><small>عرض الملف بالعربي</small></span><b>›</b></button>
+    <button class="lang" data-l="en" dir="ltr"><span>English<br><small>View the guide in English</small></span><b>›</b></button>
+  </div>
+  <p class="foot">ZED · EL SHEIKH ZAYED</p>
+</main>
+<section id="v" aria-hidden="true">
+  <div id="bar"><button id="back">‹ <span id="bl" style="color:inherit;font-size:inherit"></span></button><a id="dl" download style="color:var(--gold2);font-size:14px;text-decoration:none">PDF ⬇</a></div>
+  <div id="pg"></div>
+</section>
+<script>
+var P1="assets/p1.jpg",A2="assets/ar2.jpg",E2="assets/en2.jpg";
+var D={ar:{imgs:[P1,A2],back:"رجوع",t:"دليل شحن الكارت",pdf:"pdf/recharge-guide-ar.pdf"},en:{imgs:[P1,E2],back:"Back",t:"Recharge guide",pdf:"pdf/recharge-guide-en.pdf"}};
+var v=document.getElementById("v"),pg=document.getElementById("pg");
+function open(l){var d=D[l];pg.innerHTML="";d.imgs.forEach(function(s,i){var im=new Image();im.src=s;im.alt=d.t+" "+(i+1);pg.appendChild(im)});
+document.getElementById("bl").textContent=d.back;document.getElementById("dl").href=d.pdf;v.dir=l=="ar"?"rtl":"ltr";v.classList.add("on");pg.scrollTop=0;location.hash=l}
+function close(){v.classList.remove("on");history.replaceState(null,"",location.pathname+location.search)}
+document.querySelectorAll("button.lang").forEach(function(b){b.onclick=function(){open(b.dataset.l)}});
+document.getElementById("back").onclick=close;
+window.addEventListener("hashchange",function(){var h=location.hash.slice(1);if(D[h])open(h);else v.classList.remove("on")});
+if(D[location.hash.slice(1)])open(location.hash.slice(1));
+</script>
+</body>
+</html>

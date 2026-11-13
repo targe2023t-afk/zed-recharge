@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZED – Print Poster</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+@page{size:A4;margin:0}
+*{box-sizing:border-box;margin:0}
+body{font-family:'Cairo',Arial,sans-serif;background:#eee;color:#111}
+.tools{max-width:210mm;margin:12px auto;padding:10px 14px;background:#fff;border:1px solid #ccc;border-radius:8px;display:flex;gap:8px;align-items:center;font-size:14px}
+.tools input{flex:1;padding:8px;border:1px solid #bbb;border-radius:6px;direction:ltr}
+.tools button{padding:9px 16px;border:0;border-radius:6px;background:#111;color:#fff;font:700 14px Cairo,Arial;cursor:pointer}
+.page{width:210mm;height:297mm;margin:0 auto 20px;background:#fff;position:relative;display:flex;flex-direction:column;align-items:center;padding:20mm 18mm;text-align:center;overflow:hidden}
+.frame{position:absolute;inset:9mm;border:1.2pt solid #111}
+.frame::after{content:"";position:absolute;inset:2mm;border:.4pt solid #111}
+.logo{width:34mm;margin-top:4mm;position:relative}
+.orn{display:flex;align-items:center;gap:4mm;width:110mm;margin:9mm 0 8mm;position:relative}
+.orn::before,.orn::after{content:"";flex:1;height:.6pt;background:#111}
+.orn i{width:2.2mm;height:2.2mm;background:#111;transform:rotate(45deg)}
+.en{font:600 17pt/1.35 Georgia,'Times New Roman',serif;position:relative}
+.ar{font-weight:700;font-size:19pt;line-height:1.7;margin-top:3mm;position:relative}
+.qr{margin-top:11mm;padding:5mm;border:2pt solid #111;border-radius:4mm;position:relative}
+#qr img,#qr canvas{display:block;width:70mm!important;height:70mm!important}
+.chips{display:flex;gap:6mm;margin-top:10mm;position:relative}
+.chip{border:1.2pt solid #111;border-radius:10mm;padding:2mm 12mm;font-weight:700;font-size:13pt}
+.hint{margin-top:5mm;font-size:9.5pt;color:#333;position:relative}
+.brand{position:absolute;bottom:16mm;left:0;right:0;font:10pt Georgia,serif;letter-spacing:.35em;color:#111}
+@media print{body{background:#fff}.tools{display:none}.page{margin:0;box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="tools">
+  <span>رابط الصفحة:</span><input id="u"><button onclick="draw()">تحديث الباركود</button><button onclick="print()">طباعة</button>
+</div>
+<div class="page">
+  <div class="frame"></div>
+  <img class="logo" src="assets/logo_black.png" alt="ZED">
+  <div class="orn"><i></i></div>
+  <p class="en">Scan the code to learn how to<br>recharge your electricity meter card</p>
+  <p class="ar">امسح الكود الخاص بطريقة<br>شحن كروت عدادات الكهرباء</p>
+  <div class="qr"><div id="qr"></div></div>
+  <div class="chips"><span class="chip">العربية</span><span class="chip" style="font-family:Georgia,serif">English</span></div>
+  <p class="hint">اختر اللغة لعرض الملف &nbsp;|&nbsp; Choose your language</p>
+  <p class="brand">ZED · EL SHEIKH ZAYED</p>
+</div>
+<script>
+var u=document.getElementById("u");
+u.value=location.href.replace(/poster\.html.*$/,"");
+function draw(){var q=document.getElementById("qr");q.innerHTML="";
+new QRCode(q,{text:u.value.trim(),width:600,height:600,correctLevel:QRCode.CorrectLevel.H,colorDark:"#000",colorLight:"#fff"})}
+draw();
+</script>
+</body>
+</html>
